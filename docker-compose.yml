@@ -11,5 +11,11 @@ services:
     labels:
       - "name=redis"
       - "mode=standalone"
+
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
     restart: always
-    command: redis-server /usr/local/conf/redis.conf
+    command:
+      - /bin/sh
+      - -c
+      - redis-server --requirepass "$${REDIS_PASSWORD:?REDIS_PASSWORD variable is not set}"
